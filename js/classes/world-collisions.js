@@ -29,9 +29,17 @@ World.prototype.isJumpKill = function (enemy) {
  * @param {MovableObject} enemy - The enemy that gets killed.
  */
 World.prototype.killByJump = function (enemy) {
+    this.character.speedY = 18;
+    this.killEnemy(enemy);
+};
+
+/**
+ * Marks an enemy as dead and removes it after its death animation.
+ * @param {MovableObject} enemy - The enemy that gets killed.
+ */
+World.prototype.killEnemy = function (enemy) {
     enemy.energy = 0;
     enemy.dead_sound.play();
-    this.character.speedY = 18;
     setTimeout(() => this.removeEnemy(enemy), 1000);
 };
 
@@ -69,13 +77,24 @@ World.prototype.isThrowOnCooldown = function () {
     return new Date().getTime() - (this.lastThrow || 0) < 600;
 };
 
-/** Checks collisions between thrown bottles and enemies. */
+/** Checks bottle hits on enemies and on the ground. */
 World.prototype.checkBottleHits = function () {
     this.throwableObjects.forEach((bottle) => {
+        if (bottle.hasSplashed) return;
+        if (bottle.y >= 360) return this.groundSplash(bottle);
         this.level.enemies.forEach((enemy) => {
-            if (!bottle.hasSplashed && bottle.isColliding(enemy)) this.bottleHitsEnemy(bottle, enemy);
+            if (!enemy.isDead() && bottle.isColliding(enemy)) this.bottleHitsEnemy(bottle, enemy);
         });
     });
+};
+
+/**
+ * Lets a bottle splash on the ground without hitting an enemy.
+ * @param {ThrowableObject} bottle - The thrown bottle.
+ */
+World.prototype.groundSplash = function (bottle) {
+    bottle.splash();
+    setTimeout(() => this.removeBottle(bottle), 500);
 };
 
 /**
@@ -86,7 +105,17 @@ World.prototype.checkBottleHits = function () {
 World.prototype.bottleHitsEnemy = function (bottle, enemy) {
     bottle.splash();
     if (enemy instanceof Endboss) this.hurtEndboss(enemy);
-    else this.killByJump(enemy);
+    else this.killEnemy(enemy);
+    setTimeout(() => this.removeBottle(bottle), 500);
+};
+
+/**
+ * Removes a thrown bottle from the world.
+ * @param {ThrowableObject} bottle - The bottle to remove.
+ */
+World.prototype.removeBottle = function (bottle) {
+    let index = this.throwableObjects.indexOf(bottle);
+    if (index > -1) this.throwableObjects.splice(index, 1);
 };
 
 /**
@@ -94,8 +123,8 @@ World.prototype.bottleHitsEnemy = function (bottle, enemy) {
  * @param {Endboss} endboss - The boss that was hit.
  */
 World.prototype.hurtEndboss = function (endboss) {
-    endboss.hit();
-    endboss.hit();
+    endboss.energy = Math.max(0, endboss.energy - 20);
+    endboss.lastHit = new Date().getTime();
     this.statusBarEndboss.setPercentage(endboss.energy);
 };
 

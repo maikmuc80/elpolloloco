@@ -13,6 +13,7 @@ class World {
     coinsCollected = 0;
     bottlesCollected = 0;
     running = true;
+    stopped = false;
 
     statusBarHealth = new StatusBar(BAR_HEALTH, 20, 0, 100);
     statusBarCoin = new StatusBar(BAR_COIN, 20, 45, 0);
@@ -52,6 +53,7 @@ class World {
 
     /** Draws the whole scene and schedules the next frame. */
     draw() {
+        if (this.stopped) return;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);

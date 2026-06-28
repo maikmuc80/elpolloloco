@@ -15,6 +15,7 @@ function init() {
 
 /** Starts a fresh game: builds the level, world and hides the menu. */
 function startGame() {
+    if (world) world.stopped = true;
     initLevel();
     world = new World(canvas, keyboard);
     gameRunning = true;
@@ -59,8 +60,8 @@ function showEndScreen(won) {
     backgroundMusic.pause();
     let screen = document.getElementById('endScreen');
     let image = document.getElementById('endImage');
-    image.src = won ? 'img/You won, you lost/You Won A.png'
-        : 'img/9_intro_outro_screens/game_over/game over.png';
+    image.src = won ? 'img/9_intro_outro_screens/you_won.png'
+        : 'img/9_intro_outro_screens/game_over_clean.png';
     screen.classList.remove('d-none');
     document.getElementById('canvas').classList.add('d-none');
 }

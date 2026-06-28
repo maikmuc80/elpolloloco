@@ -44,6 +44,7 @@ class Character extends MovableObject {
 
     /** Reads the keyboard and moves the character accordingly. */
     handleMovement() {
+        if (this.isDead()) return;
         this.walking_sound.pause();
         if (this.canMoveRight()) this.walkRight();
         if (this.canMoveLeft()) this.walkLeft();
