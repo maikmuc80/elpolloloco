@@ -1,14 +1,112 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>El Pollo Loco</title>
+    <link rel="icon" href="img/8_coin/coin_1.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="js/helpers.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/classes/drawable-object.class.js"></script>
+    <script src="js/classes/movable-object.class.js"></script>
+    <script src="js/classes/throwable-object.class.js"></script>
+    <script src="js/classes/character.class.js"></script>
+    <script src="js/classes/chicken.class.js"></script>
+    <script src="js/classes/small-chicken.class.js"></script>
+    <script src="js/classes/endboss.class.js"></script>
+    <script src="js/classes/coin.class.js"></script>
+    <script src="js/classes/bottle.class.js"></script>
+    <script src="js/classes/cloud.class.js"></script>
+    <script src="js/classes/background-object.class.js"></script>
+    <script src="js/classes/status-bar.class.js"></script>
+    <script src="js/classes/level.class.js"></script>
+    <script src="js/classes/keyboard.class.js"></script>
+    <script src="js/classes/world.class.js"></script>
+    <script src="js/classes/world-collisions.js"></script>
+    <script src="js/level1.js"></script>
     <script src="js/game.js"></script>
 </head>
+
 <body onload="init()">
     <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
+
+    <div id="rotateHint" class="rotate-hint">
+        <img src="img/2_character_pepe/2_walk/W-21.png" alt="Pepe">
+        <p>Bitte drehe dein Gerät ins Querformat, um zu spielen.</p>
+    </div>
+
+    <div id="gameContainer" class="game-container">
+        <div class="top-bar">
+            <button onclick="openDialog('helpDialog')">Anleitung</button>
+            <button onclick="openDialog('storyDialog')">Story</button>
+            <button onclick="toggleMute()"><span id="muteIcon">🔊</span></button>
+            <button onclick="toggleFullscreen()">⛶</button>
+        </div>
+
+        <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+
+        <div id="startScreen" class="overlay start-screen">
+            <button class="start-btn" onclick="startGame()">Spiel starten</button>
+        </div>
+
+        <div id="endScreen" class="overlay end-screen d-none">
+            <img id="endImage" src="" alt="Endbildschirm">
+            <div class="end-buttons">
+                <button onclick="restartGame()">Nochmal spielen</button>
+                <button onclick="backToHome()">Zum Startbildschirm</button>
+            </div>
+        </div>
+
+        <div id="mobileControls" class="mobile-controls">
+            <div class="mobile-left">
+                <button class="ctrl-btn" oncontextmenu="return false"
+                    ontouchstart="pressButton('LEFT', true, event)" ontouchend="pressButton('LEFT', false, event)"
+                    onmousedown="pressButton('LEFT', true, event)" onmouseup="pressButton('LEFT', false, event)">◀</button>
+                <button class="ctrl-btn" oncontextmenu="return false"
+                    ontouchstart="pressButton('RIGHT', true, event)" ontouchend="pressButton('RIGHT', false, event)"
+                    onmousedown="pressButton('RIGHT', true, event)" onmouseup="pressButton('RIGHT', false, event)">▶</button>
+            </div>
+            <div class="mobile-right">
+                <button class="ctrl-btn" oncontextmenu="return false"
+                    ontouchstart="pressButton('SPACE', true, event)" ontouchend="pressButton('SPACE', false, event)"
+                    onmousedown="pressButton('SPACE', true, event)" onmouseup="pressButton('SPACE', false, event)">⤒</button>
+                <button class="ctrl-btn" oncontextmenu="return false"
+                    ontouchstart="pressButton('D', true, event)" ontouchend="pressButton('D', false, event)"
+                    onmousedown="pressButton('D', true, event)" onmouseup="pressButton('D', false, event)">🍾</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="helpDialog" class="dialog d-none" onclick="closeDialog('helpDialog')">
+        <div class="dialog-box" onclick="event.stopPropagation()">
+            <span class="dialog-close" onclick="closeDialog('helpDialog')">&times;</span>
+            <h2>Tastenbelegung</h2>
+            <ul>
+                <li><b>◀ / ▶</b> &ndash; Pepe nach links / rechts bewegen</li>
+                <li><b>Leertaste</b> &ndash; Springen</li>
+                <li><b>D</b> &ndash; Salsa-Flasche werfen</li>
+            </ul>
+            <p>Sammle M&uuml;nzen und Flaschen, besiege die H&uuml;hner und schlage den Endboss!</p>
+        </div>
+    </div>
+
+    <div id="storyDialog" class="dialog d-none" onclick="closeDialog('storyDialog')">
+        <div class="dialog-box" onclick="event.stopPropagation()">
+            <span class="dialog-close" onclick="closeDialog('storyDialog')">&times;</span>
+            <h2>Die Story</h2>
+            <p>Pepe wandert durch die mexikanische W&uuml;ste, in der verr&uuml;ckte H&uuml;hner ihr
+                Unwesen treiben. Nur wer genug Salsa-Flaschen sammelt, kann es mit der
+                gigantischen Henne, dem Endboss, aufnehmen. Hilf Pepe, El Pollo Loco zu besiegen!</p>
+        </div>
+    </div>
+
+    <footer>
+        <a href="impressum.html">Impressum</a>
+    </footer>
 </body>
+
 </html>

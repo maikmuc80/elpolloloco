@@ -28,3 +28,19 @@ function pressButton(key, state, event) {
     event.preventDefault();
     keyboard[key] = state;
 }
+
+/**
+ * Opens an overlay dialog by its id.
+ * @param {string} id - The id of the dialog element.
+ */
+function openDialog(id) {
+    document.getElementById(id).classList.remove('d-none');
+}
+
+/**
+ * Closes an overlay dialog by its id.
+ * @param {string} id - The id of the dialog element.
+ */
+function closeDialog(id) {
+    document.getElementById(id).classList.add('d-none');
+}
