@@ -18,7 +18,7 @@ class World {
     statusBarHealth = new StatusBar(BAR_HEALTH, 20, 0, 100);
     statusBarCoin = new StatusBar(BAR_COIN, 20, 45, 0);
     statusBarBottle = new StatusBar(BAR_BOTTLE, 20, 90, 0);
-    statusBarEndboss = new StatusBar(BAR_ENDBOSS, 490, 0, 100);
+    statusBarEndboss = new StatusBar(BAR_ENDBOSS, 490, 50, 100);
 
     /**
      * Builds the world and starts the loops.
