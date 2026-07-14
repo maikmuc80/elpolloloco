@@ -92,6 +92,7 @@ class World {
         if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
         if (mo.otherDirection) this.flipImageBack(mo);
+        if (showHitboxes && mo.drawHitbox) mo.drawHitbox(this.ctx); // Debug
     }
 
     /**

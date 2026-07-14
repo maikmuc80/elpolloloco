@@ -92,4 +92,16 @@ class MovableObject extends DrawableObject {
     isDead() {
         return this.energy == 0;
     }
+
+    drawHitbox(ctx) {
+        ctx.strokeStyle = 'blue';                 // Bildkante
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        ctx.strokeStyle = 'red';                  // echte Hitbox mit Offset
+        ctx.strokeRect(
+            this.x + this.offset.left,
+            this.y + this.offset.top,
+            this.width  - this.offset.left - this.offset.right,
+            this.height - this.offset.top  - this.offset.bottom
+        );
+    }
 }

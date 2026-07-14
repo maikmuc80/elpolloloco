@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let gameRunning = false;
 let backgroundMusic = new Audio('audio/game/gameStart.mp3');
+let showHitboxes = false;
 
 /** Prepares the canvas, mute icon and keyboard once the page loaded. */
 function init() {
