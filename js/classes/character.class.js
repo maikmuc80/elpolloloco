@@ -111,7 +111,7 @@ class Character extends MovableObject {
     /** Plays the idle animation, switching to sleep after 15 seconds. */
     playIdleState() {
         let idle = (new Date().getTime() - this.lastMove) / 1000;
-        if (idle > 15) {
+        if (idle > 15 && this.world.running) {
             this.playAnimation(this.IMAGES_SLEEP);
             this.snore_sound.play();
         } else {
