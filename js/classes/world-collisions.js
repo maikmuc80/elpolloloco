@@ -188,5 +188,7 @@ World.prototype.endGame = function (won) {
     if (!this.running) return;
     this.running = false;
     this.character.snore_sound.pause();
+    stopAllSounds();
+    backgroundMusic.pause();
     setTimeout(() => showEndScreen(won), 800);
 };
