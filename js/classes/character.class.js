@@ -9,7 +9,7 @@ class Character extends MovableObject {
     speed = 6;
     world;
     lastMove = new Date().getTime();
-    offset = { top: 110, left: 25, right: 35, bottom: 12 };
+    offset = { top: 110, left: 40, right: 40, bottom: 4 };
 
     IMAGES_IDLE = buildPaths('img/2_character_pepe/1_idle/idle/I-', 1, 10, '.png');
     IMAGES_SLEEP = buildPaths('img/2_character_pepe/1_idle/long_idle/I-', 11, 20, '.png');
