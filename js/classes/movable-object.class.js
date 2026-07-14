@@ -63,10 +63,10 @@ class MovableObject extends DrawableObject {
      * @returns {boolean} True if both hitboxes overlap.
      */
     isColliding(mo) {
-        return this.x + this.offset.left + this.width - this.offset.right > mo.x + mo.offset.left &&
-            this.y + this.offset.top + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-            this.x + this.offset.left < mo.x + mo.offset.left + mo.width - mo.offset.right &&
-            this.y + this.offset.top < mo.y + mo.offset.top + mo.height - mo.offset.bottom;
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
     /** Reduces energy on hit and stores the time of the hit. */
