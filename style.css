@@ -83,14 +83,15 @@ canvas {
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    background-size: cover;
+    background-size: 116% auto;
     background-position: center;
 }
 
 .start-screen {
     background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
     justify-content: flex-start;
-    padding-top: 60px;
+    padding-top: 10px;
+    padding-right: 300px;
 }
 
 .start-btn {
