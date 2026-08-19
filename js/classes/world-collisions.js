@@ -67,9 +67,11 @@ World.prototype.killEnemy = function (enemy) {
     setTimeout(() => this.removeEnemy(enemy), 1000);
 };
 
-/** Lets the character take damage and updates its status bar. */
+/** Lets the character take damage, plays the hit sound and updates its bar. */
 World.prototype.hurtCharacter = function () {
     this.character.hit();
+    this.character.hurt_sound.currentTime = 0;
+    this.character.hurt_sound.play();
     this.statusBarHealth.setPercentage(this.character.energy);
 };
 

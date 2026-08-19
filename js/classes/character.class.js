@@ -23,6 +23,7 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/character/characterRun.mp3');
     jump_sound = new Audio('audio/character/characterJump.wav');
     snore_sound = new Audio('audio/character/characterSnoring.mp3');
+    hurt_sound = new Audio('audio/character/characterDamage.mp3');
 
     /** Loads all images and starts gravity and the animation loops. */
     constructor() {
