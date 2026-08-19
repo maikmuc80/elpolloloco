@@ -8,8 +8,19 @@ World.prototype.checkCollisions = function () {
     this.level.enemies.forEach((enemy) => {
         if (enemy.isDead()) return;
         if (this.isJumpKill(enemy)) this.killByJump(enemy);
-        else if (this.character.isColliding(enemy)) this.hurtCharacter();
+        else if (this.canBeHurtBy(enemy)) this.hurtCharacter();
     });
+};
+
+/**
+ * Checks whether an enemy may damage the character right now.
+ * While the character is hurt it stays invulnerable, so standing next to
+ * an enemy costs one hit per second instead of one hit per frame.
+ * @param {MovableObject} enemy - The enemy to test.
+ * @returns {boolean} True if the hit counts.
+ */
+World.prototype.canBeHurtBy = function (enemy) {
+    return this.character.isColliding(enemy) && !this.character.isHurt();
 };
 
 /**
