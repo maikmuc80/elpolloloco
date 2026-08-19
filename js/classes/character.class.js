@@ -7,6 +7,8 @@ class Character extends MovableObject {
     width = 130;
     y = 150;
     speed = 6;
+    acceleration = 1.6;
+    jumpPower = 24;
     world;
     lastMove = new Date().getTime();
     offset = { top: 110, left: 40, right: 40, bottom: 4 };
@@ -32,7 +34,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.applyGravity();
+        this.applyGravity(60);
         this.animate();
     }
 

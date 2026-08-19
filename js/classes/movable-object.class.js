@@ -9,18 +9,36 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    groundY = 150;
+    jumpPower = 30;
     offset = { top: 0, left: 0, right: 0, bottom: 0 };
 
     /**
      * Applies gravity by reducing the vertical speed over time.
+     * @param {number} [fps=25] - How often gravity is applied per second.
+     *     A higher rate makes the jump shorter and the fall smoother.
      */
-    applyGravity() {
+    applyGravity(fps = 25) {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 25);
+            this.landOnGround();
+        }, 1000 / fps);
+    }
+
+    /**
+     * Stops a fall exactly on the ground. The last gravity step can
+     * overshoot, which would leave the object standing below the floor
+     * for the rest of the game.
+     */
+    landOnGround() {
+        if (this instanceof ThrowableObject || this.speedY > 0) return;
+        if (this.y > this.groundY) {
+            this.y = this.groundY;
+            this.speedY = 0;
+        }
     }
 
     /**
@@ -29,7 +47,7 @@ class MovableObject extends DrawableObject {
      */
     isAboveGround() {
         if (this instanceof ThrowableObject) return this.y < 360;
-        return this.y < 150;
+        return this.y < this.groundY;
     }
 
     /**
@@ -54,7 +72,7 @@ class MovableObject extends DrawableObject {
 
     /** Lets the object jump by setting a positive vertical speed. */
     jump() {
-        this.speedY = 30;
+        this.speedY = this.jumpPower;
     }
 
     /**
