@@ -115,10 +115,15 @@ class MovableObject extends DrawableObject {
         return this.energy == 0;
     }
 
+    /**
+     * Debug helper: outlines the image edge in blue and the hitbox that the
+     * collision check really uses in red. Switched on with showHitboxes.
+     * @param {CanvasRenderingContext2D} ctx - The canvas context.
+     */
     drawHitbox(ctx) {
-        ctx.strokeStyle = 'blue';                 // Bildkante
+        ctx.strokeStyle = 'blue';
         ctx.strokeRect(this.x, this.y, this.width, this.height);
-        ctx.strokeStyle = 'red';                  // echte Hitbox mit Offset
+        ctx.strokeStyle = 'red';
         ctx.strokeRect(
             this.x + this.offset.left,
             this.y + this.offset.top,
