@@ -7,8 +7,9 @@ class Endboss extends MovableObject {
     width = 250;
     y = 55;
     energy = 100;
-    speed = 4;
+    speed = 1.8;
     hadFirstContact = false;
+    world;
     offset = { top: 70, left: 30, right: 30, bottom: 15 };
 
     IMAGES_WALKING = buildPaths('img/4_enemie_boss_chicken/1_walk/G', 1, 4, '.png');
@@ -31,9 +32,10 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
-    /** Runs the boss state machine on a fixed interval. */
+    /** Runs the boss state machine and its movement loop. */
     animate() {
         setInterval(() => this.playState(), 150);
+        setInterval(() => this.chase(), 1000 / 60);
     }
 
     /** Chooses the animation that matches the current boss state. */
@@ -50,9 +52,48 @@ class Endboss extends MovableObject {
         this.hurt_sound.play();
     }
 
-    /** Walks towards the character while attacking. */
+    /** Attacks close to the character and walks while approaching. */
     playActive() {
-        this.playAnimation(this.IMAGES_ATTACK);
-        this.moveLeft();
+        if (this.distanceToCharacter() < 260) this.playAnimation(this.IMAGES_ATTACK);
+        else this.playAnimation(this.IMAGES_WALKING);
+    }
+
+    /**
+     * Moves the boss towards the character and turns it to face him.
+     * Right next to the character it only turns, otherwise it would step
+     * back and forth around him and flip its sprite every frame.
+     */
+    chase() {
+        if (!this.canChase()) return;
+        this.otherDirection = this.world.character.x > this.x;
+        if (this.distanceToCharacter() < 40) return;
+        this.x += this.otherDirection ? this.currentSpeed() : -this.currentSpeed();
+    }
+
+    /**
+     * Checks whether the boss is allowed to move at the moment.
+     * @returns {boolean} True while it is awake, alive and not stunned.
+     */
+    canChase() {
+        return this.hadFirstContact && !this.isDead() && !this.isHurt() &&
+            !!this.world && this.world.running;
+    }
+
+    /**
+     * Speeds the boss up the more damage it has taken, so the fight gets
+     * harder instead of easier towards the end.
+     * @returns {number} Pixels the boss moves per frame.
+     */
+    currentSpeed() {
+        return this.speed + (100 - this.energy) / 100 * 1.6;
+    }
+
+    /**
+     * Measures the horizontal distance to the character.
+     * @returns {number} Distance in pixels, Infinity before the world is set.
+     */
+    distanceToCharacter() {
+        if (!this.world) return Infinity;
+        return Math.abs(this.world.character.x - this.x);
     }
 }

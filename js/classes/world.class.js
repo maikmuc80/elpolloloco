@@ -34,9 +34,10 @@ class World {
         this.run();
     }
 
-    /** Gives the character a reference back to the world. */
+    /** Gives the character and every enemy a reference back to the world. */
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach((enemy) => (enemy.world = this));
     }
 
     /** Runs the collision and throwing checks on a fixed interval. */
@@ -73,7 +74,18 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarBottle);
-        if (this.character.x > 1900) this.addToMap(this.statusBarEndboss);
+        if (this.isEndbossAwake()) this.addToMap(this.statusBarEndboss);
+    }
+
+    /**
+     * Checks whether the endboss fight has already started. The bar follows
+     * the boss instead of a fixed position, so it stays visible while the
+     * boss chases the character back to the left.
+     * @returns {boolean} True once the boss has noticed the character.
+     */
+    isEndbossAwake() {
+        let endboss = this.level.enemies.find((e) => e instanceof Endboss);
+        return !!endboss && endboss.hadFirstContact;
     }
 
     /**
