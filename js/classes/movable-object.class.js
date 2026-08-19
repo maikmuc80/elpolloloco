@@ -87,9 +87,13 @@ class MovableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
-    /** Reduces energy on hit and stores the time of the hit. */
+    /**
+     * Reduces energy on hit and stores the time of the hit.
+     * One hit costs a fifth of the energy, which is exactly one step of
+     * the status bar, so every hit is visible.
+     */
     hit() {
-        this.energy -= 5;
+        this.energy -= 20;
         if (this.energy < 0) this.energy = 0;
         else this.lastHit = new Date().getTime();
     }
