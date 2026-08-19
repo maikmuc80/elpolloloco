@@ -83,7 +83,7 @@ canvas {
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    background-size: 116% auto;
+    background-size: cover;
     background-position: center;
 }
 
