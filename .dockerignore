@@ -1,0 +1,21 @@
+# Keeps the build context small. The repository history alone is ten times the
+# size of the site itself, and none of it belongs in an image.
+.git/
+.gitignore
+
+# Layered source files for the sprites — 25 MB that no line of code refers to.
+img/1_editables/
+
+# Already excluded from the repository, listed again for local builds.
+docs/
+erklaervideo/
+*.zip
+*.ai
+
+.DS_Store
+**/.DS_Store
+
+# Not part of the site.
+README.md
+Dockerfile
+.dockerignore
