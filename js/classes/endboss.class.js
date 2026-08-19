@@ -46,10 +46,14 @@ class Endboss extends MovableObject {
         else this.playAnimation(this.IMAGES_ALERT);
     }
 
-    /** Plays the hurt animation together with its sound. */
+    /**
+     * Plays the hurt animation together with its sound. The animation also
+     * runs while the end screen fades in, the sound must not - it would
+     * start again right after the game stopped all sounds.
+     */
     playHurt() {
         this.playAnimation(this.IMAGES_HURT);
-        this.hurt_sound.play();
+        if (!this.world || this.world.running) this.hurt_sound.play();
     }
 
     /** Attacks close to the character and walks while approaching. */

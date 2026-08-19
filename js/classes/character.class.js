@@ -44,10 +44,15 @@ class Character extends MovableObject {
         setInterval(() => this.playState(), 100);
     }
 
-    /** Reads the keyboard and moves the character accordingly. */
+    /**
+     * Reads the keyboard and moves the character accordingly.
+     * The loop keeps running after the game is over, so it has to check
+     * that as well - otherwise the arrow keys still move the character and
+     * play his footsteps behind the end screen.
+     */
     handleMovement() {
-        if (this.isDead()) return;
         this.walking_sound.pause();
+        if (this.isDead() || !this.world.running) return;
         if (this.canMoveRight()) this.walkRight();
         if (this.canMoveLeft()) this.walkLeft();
         if (this.world.keyboard.SPACE && !this.isAboveGround()) this.startJump();
