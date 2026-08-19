@@ -48,7 +48,7 @@ class World {
             this.checkCollecting();
             this.checkEndboss();
             this.checkGameOver();
-        }, 1000 / 30);
+        }, 1000 / 60);
     }
 
     /** Draws the whole scene and schedules the next frame. */

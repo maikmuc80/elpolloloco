@@ -30,9 +30,22 @@ World.prototype.canBeHurtBy = function (enemy) {
  */
 World.prototype.isJumpKill = function (enemy) {
     let isChicken = enemy instanceof Chicken || enemy instanceof SmallChicken;
-    let feet = this.character.y + this.character.height - this.character.offset.bottom;
     return isChicken && this.character.isColliding(enemy) &&
-        this.character.speedY < 0 && feet < enemy.y + enemy.height / 2;
+        this.character.speedY < 0 && this.characterIsAbove(enemy);
+};
+
+/**
+ * Checks whether the character's feet are still in the upper part of an
+ * enemy. Gravity moves the character in steps of about 24 pixels, so the
+ * window has to cover a whole step - otherwise a landing that looks like a
+ * hit on the head counts as a side collision and costs health.
+ * @param {MovableObject} enemy - The enemy to test.
+ * @returns {boolean} True if the character comes down onto the enemy.
+ */
+World.prototype.characterIsAbove = function (enemy) {
+    let feet = this.character.y + this.character.height - this.character.offset.bottom;
+    let enemyTop = enemy.y + enemy.offset.top;
+    return feet < enemyTop + enemy.height * 0.6;
 };
 
 /**
