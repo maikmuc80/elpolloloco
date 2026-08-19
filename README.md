@@ -9,6 +9,8 @@ frameworks.
 
 **[Play it here](https://elpolloloco.maik-radke.de)**
 
+The game runs on nginx in a container and is redeployed on every push to `main`.
+
 Or run it locally:
 
 1. Clone or download the repository.
