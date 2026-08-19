@@ -34,15 +34,17 @@ class StatusBar extends DrawableObject {
     }
 
     /**
-     * Maps the percentage to an index in the image array.
+     * Maps the percentage to an index in the image array. The steps are
+     * inclusive: every value the game produces is a multiple of 20 and has
+     * to show its own image, not the one below it.
      * @returns {number} Index between 0 and 5.
      */
     resolveImageIndex() {
         if (this.percentage >= 100) return 5;
-        if (this.percentage > 80) return 4;
-        if (this.percentage > 60) return 3;
-        if (this.percentage > 40) return 2;
-        if (this.percentage > 20) return 1;
+        if (this.percentage >= 80) return 4;
+        if (this.percentage >= 60) return 3;
+        if (this.percentage >= 40) return 2;
+        if (this.percentage >= 20) return 1;
         return 0;
     }
 }
