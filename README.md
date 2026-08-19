@@ -7,6 +7,10 @@ frameworks.
 
 ## Play
 
+**[Play it here](https://elpolloloco.maik-radke.de)**
+
+Or run it locally:
+
 1. Clone or download the repository.
 2. Open `index.html` in your browser (or start a local server).
 3. Click **Start game**.
